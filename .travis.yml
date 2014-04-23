@@ -1,0 +1,7 @@
+language: node_js
+node_js:
+  - '0.10'
+before_install:
+  - currentfolder=${PWD##*/}
+  - if [ "$currentfolder" != 'generator-drupal-module' ]; then cd .. && eval "mv $currentfolder generator-drupal-module" && cd generator-drupal-module; fi
+
