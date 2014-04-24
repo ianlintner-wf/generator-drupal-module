@@ -5,10 +5,10 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     jshint: {
-        all: ['Gruntfile.js', 'app/*.js'],
-        options: {
-          jshintrc: '.jshintrc'
-        }
+      all: ['Gruntfile.js', 'app/*.js', 'test/*.js'],
+      options: {
+        jshintrc: '.jshintrc'
+      }
     },
     simplemocha: {
       options: {
@@ -29,5 +29,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-simple-mocha');
 
 // Default task(s).
-  grunt.registerTask('default', ['jshint']);
+  grunt.registerTask('default', ['jshint', 'simplemocha']);
 };
