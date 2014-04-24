@@ -26,12 +26,18 @@ describe('drupal-module generator', function () {
     ];
 
     helpers.mockPrompt(this.app, {
-      'someOption': true
+      'addScripts': true,
+      'addSass': true,
+      'moduleName': 'testModule'
     });
     this.app.options['skip-install'] = true;
-    this.app.run({}, function () {
-      helpers.assertFile(expected);
-      done();
-    });
+    try {
+      this.app.run({}, function () {
+        helpers.assertFile(expected);
+        done();
+      });
+    } catch (e) {
+      fail(e.getMessage());
+    }
   });
 });
