@@ -1,6 +1,7 @@
 'use strict';
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
+var _s = require('underscore.string');
 
 var DrupalModuleGenerator = yeoman.generators.Base.extend({
   init: function () {
@@ -54,10 +55,10 @@ var DrupalModuleGenerator = yeoman.generators.Base.extend({
     this.copy('_package.json', 'package.json');
     this.copy('_bower.json', 'bower.json');
     this.copy('Gruntfile.js', 'Gruntfile.js');
-    this.copy('_module.info', this.moduleName + '.info');
+    this.copy('_module.info', _s.slugify(this.moduleName) + '.info');
 
     if (this.addScripts) {
-      this.copy('scripts/_script.js', 'scripts/' + this.moduleName + '.js');
+      this.copy('scripts/_script.js', 'scripts/' + _s.slugify(this.moduleName)  + '.js');
     }
   },
 

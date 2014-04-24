@@ -61,4 +61,25 @@ describe('drupal-module generator', function () {
       done();
     });
   });
+  it('transforms the module name into filenames correctly', function (done) {
+    var expected = [
+      // add files you expect to exist here.
+      'Gruntfile.js',
+      'package.json',
+      'test-module.info',
+      'scripts/test-module.js'
+    ];
+
+    helpers.mockPrompt(this.app, {
+      'addScripts': true,
+      'addSass': true,
+      'moduleName': 'Test Module!'
+    });
+
+    this.app.options['skip-install'] = true;
+    this.app.run({}, function () {
+      helpers.assertFile(expected);
+      done();
+    });
+  });
 });
