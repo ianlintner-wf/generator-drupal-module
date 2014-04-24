@@ -22,14 +22,14 @@ describe('drupal-module generator', function () {
       // add files you expect to exist here.
       'Gruntfile.js',
       'package.json',
-      'testModule.info',
-      'scripts/testModule.js'
+      'test.info',
+      'scripts/test.js'
     ];
 
     helpers.mockPrompt(this.app, {
       'addScripts': true,
       'addSass': true,
-      'moduleName': 'testModule'
+      'moduleName': 'test'
     });
 
     this.app.options['skip-install'] = true;
@@ -43,15 +43,15 @@ describe('drupal-module generator', function () {
       // add files you expect to exist here.
       'Gruntfile.js',
       'package.json',
-      'testModule.info'
+      'test.info'
     ], unexpected = [
-      'scripts/testModule.info'
+      'scripts/test.info'
     ];
 
     helpers.mockPrompt(this.app, {
       'addScripts': false,
       'addSass': true,
-      'moduleName': 'testModule'
+      'moduleName': 'test'
     });
 
     this.app.options['skip-install'] = true;
