@@ -30,19 +30,22 @@ var DrupalModuleGenerator = yeoman.generators.Base.extend({
       message: 'What should I name your module?'
     }, {
       type: 'confirm',
-      name: 'scripts',
+      name: 'addScripts',
       message: 'Does your module need any JavaScript?',
       default: true
     }, {
       type: 'confirm',
-      name: 'sass',
+      name: 'addSass',
       message: 'Does your module need to use Sass?',
       default: true
     }];
 
     this.prompt(prompts, function (props) {
-      this.someOption = props.someOption;
+      this.moduleName = props.moduleName;
+      this.scripts = (/y/i).test(props.addScripts) ? 'scripts[] = scripts/' + props.moduleName + '.js' : '';
 
+      this.addSass = props.addSass;
+      this.stylesheets = (/y/i).test(props.addSass) ? 'stylesheets[all][] = sass/' + props.moduleName + '.sass';
       done();
     }.bind(this));
   },
