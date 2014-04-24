@@ -45,7 +45,7 @@ var DrupalModuleGenerator = yeoman.generators.Base.extend({
       this.scripts = (/y/i).test(props.addScripts) ? 'scripts[] = scripts/' + props.moduleName + '.js' : '';
 
       this.addSass = props.addSass;
-      this.stylesheets = (/y/i).test(props.addSass) ? 'stylesheets[all][] = sass/' + props.moduleName + '.sass';
+      this.stylesheets = (/y/i).test(props.addSass) ? 'stylesheets[all][] = sass/' + props.moduleName + '.sass' : '';
       done();
     }.bind(this));
   },
