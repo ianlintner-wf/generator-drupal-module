@@ -22,7 +22,8 @@ describe('drupal-module generator', function () {
       // add files you expect to exist here.
       'Gruntfile.js',
       'package.json',
-      'cruk-test.info'
+      'testModule.info',
+      'scripts/testModule.js'
     ];
 
     helpers.mockPrompt(this.app, {
@@ -30,22 +31,21 @@ describe('drupal-module generator', function () {
       'addSass': true,
       'moduleName': 'testModule'
     });
+
     this.app.options['skip-install'] = true;
-    try {
-      this.app.run({}, function () {
-        helpers.assertFile(expected);
-        done();
-      });
-    } catch (e) {
-      fail(e.getMessage());
-    }
+    this.app.run({}, function () {
+      helpers.assertFile(expected);
+      done();
+    });
   });
   it('generates without JS scripts', function (done) {
     var expected = [
       // add files you expect to exist here.
       'Gruntfile.js',
       'package.json',
-      'cruk-test.info'
+      'testModule.info'
+    ], unexpected = [
+      'scripts/testModule.info'
     ];
 
     helpers.mockPrompt(this.app, {
@@ -53,14 +53,12 @@ describe('drupal-module generator', function () {
       'addSass': true,
       'moduleName': 'testModule'
     });
+
     this.app.options['skip-install'] = true;
-    try {
-      this.app.run({}, function () {
-        helpers.assertFile(expected);
-        done();
-      });
-    } catch (e) {
-      fail(e.getMessage());
-    }
+    this.app.run({}, function () {
+      helpers.assertFile(expected);
+      helpers.assertNoFile(unexpected);
+      done();
+    });
   });
 });
