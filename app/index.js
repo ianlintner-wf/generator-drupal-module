@@ -4,7 +4,6 @@ var path = require('path');
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 
-
 var DrupalModuleGenerator = yeoman.generators.Base.extend({
   init: function () {
     this.pkg = require('../package.json');
@@ -42,7 +41,7 @@ var DrupalModuleGenerator = yeoman.generators.Base.extend({
 
     this.prompt(prompts, function (props) {
       this.moduleName = props.moduleName;
-      this.scripts = (/y/i).test(props.addScripts) ? 'scripts[] = scripts/' + props.moduleName + '.js' : '';
+      this.addScripts = props.addScripts;
 
       this.addSass = props.addSass;
       this.stylesheets = (/y/i).test(props.addSass) ? 'stylesheets[all][] = sass/' + props.moduleName + '.sass' : '';
@@ -57,7 +56,11 @@ var DrupalModuleGenerator = yeoman.generators.Base.extend({
     this.copy('_package.json', 'package.json');
     this.copy('_bower.json', 'bower.json');
     this.copy('Gruntfile.js', 'Gruntfile.js');
-    this.copy('_module.info', 'cruk-test.info');
+    this.copy('_module.info', this.moduleName + '.info');
+
+    if (this.addScripts) {
+      this.copy('scripts/_script.js', 'scripts/' + this.moduleName + '.js');
+    }
   },
 
   projectfiles: function () {
