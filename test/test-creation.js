@@ -2,18 +2,16 @@
 'use strict';
 var path = require('path');
 var helpers = require('yeoman-generator').test;
-/**
- * app
- * files:
- *   - expected   -> array[string]
- *   - unexpected -> array[string]
- */
-helpers.verifyGeneratedFiles = function(app, files, done) {
+
+helpers.verifyGeneratedFiles = function(app, files, fileContent, done) {
   app.options['skip-install'] = true;
   app.run({}, function () {
     helpers.assertFile(files.expected);
     if (files.unexpected) {
       helpers.assertNoFile(files.unexpected);
+    }
+    if (fileContent) {
+      helpers.assertFileContent(fileContent);
     }
     done();
   });
@@ -49,7 +47,7 @@ describe('drupal-module generator', function () {
       'moduleName': 'test'
     });
 
-    helpers.verifyGeneratedFiles(this.app, files, done);
+    helpers.verifyGeneratedFiles(this.app, files, false, done);
   });
   it('generates without JS scripts', function (done) {
     var files = {
@@ -69,12 +67,11 @@ describe('drupal-module generator', function () {
       'moduleName': 'test'
     });
 
-    helpers.verifyGeneratedFiles(this.app, files, done);
+    helpers.verifyGeneratedFiles(this.app, files, false, done);
   });
   it('transforms the module name into filenames correctly', function (done) {
     var files = {
       expected: [
-        // add files you expect to exist here.
         'Gruntfile.js',
         'package.json',
         'test-module.info',
@@ -88,6 +85,26 @@ describe('drupal-module generator', function () {
       'moduleName': 'Test Module!'
     });
 
-    helpers.verifyGeneratedFiles(this.app, files, done);
+    helpers.verifyGeneratedFiles(this.app, files, false, done);
+  });
+  it('replaces placeholders in meta-data files with appropriate content', function (done) {
+    var files = {
+      expected: [
+        'package.json',
+        'test-module.info'
+      ]
+    };
+    var fileContent = [
+      ['package.json', /"name": "test-module"/],
+      ['test-module.info', /name = Test module/]
+    ];
+
+    helpers.mockPrompt(this.app, {
+      'addScripts': true,
+      'addSass': true,
+      'moduleName': 'Test module'
+    });
+
+    helpers.verifyGeneratedFiles(this.app, files, fileContent, done);
   });
 });

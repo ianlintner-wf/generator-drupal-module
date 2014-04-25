@@ -1,5 +1,14 @@
 {
-  "name": "package",
-  "version": "0.0.0",
-  "dependencies": {}
+  "name": "<%= _.slugify(moduleName) %>",
+  "version": "0.1.0",
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-compass": "^0.7.2",
+    "grunt-contrib-imagemin": "^0.6.1",
+    "grunt-newer": "^0.7.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "optipng-bin": "^0.3.3",
+    "grunt-notify": "^0.2.20"
+  }
 }

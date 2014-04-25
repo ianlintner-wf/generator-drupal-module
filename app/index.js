@@ -37,10 +37,13 @@ var DrupalModuleGenerator = yeoman.generators.Base.extend({
 
     this.prompt(prompts, function (props) {
       this.moduleName = props.moduleName;
+      var slugName = _s.slugify(this.moduleName);
+
       this.addScripts = props.addScripts;
+      this.scripts = this.addScripts ? 'scripts[] = scripts/' + slugName + '.js': '';
 
       this.addSass = props.addSass;
-      this.stylesheets = (/y/i).test(props.addSass) ? 'stylesheets[all][] = sass/' + props.moduleName + '.sass' : '';
+      this.stylesheets = this.addSass ? 'stylesheets[all][] = sass/' + slugName + '.sass' : '';
       done();
     }.bind(this));
   },
@@ -49,10 +52,10 @@ var DrupalModuleGenerator = yeoman.generators.Base.extend({
     this.mkdir('app');
     this.mkdir('app/templates');
 
-    this.copy('_package.json', 'package.json');
+    this.template('_package.json', 'package.json');
     this.copy('_bower.json', 'bower.json');
     this.copy('Gruntfile.js', 'Gruntfile.js');
-    this.copy('_module.info', _s.slugify(this.moduleName) + '.info');
+    this.template('_module.info', _s.slugify(this.moduleName) + '.info');
 
     if (this.addScripts) {
       this.copy('scripts/_script.js', 'scripts/' + _s.slugify(this.moduleName)  + '.js');
