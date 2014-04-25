@@ -17,10 +17,7 @@ var DrupalModuleGenerator = yeoman.generators.Base.extend({
   askFor: function () {
     var done = this.async();
 
-    // have Yeoman greet the user
     this.log(this.yeoman);
-
-    // replace it with a short and sweet description of your generator
     this.log(chalk.magenta('Let\'s make a Drupal module!'));
 
     var prompts = [{
