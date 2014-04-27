@@ -1,5 +1,5 @@
 name = <%= moduleName %>
-
+description = <%= moduleDescription %>
 <%= scripts %>
 
 <%= stylesheets %>
