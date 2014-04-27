@@ -24,6 +24,9 @@ var DrupalModuleGenerator = yeoman.generators.Base.extend({
       name: 'moduleName',
       message: 'What should I name your module?'
     }, {
+      name: 'moduleDescription',
+      message: 'Describe your module'
+    }, {
       type: 'confirm',
       name: 'addScripts',
       message: 'Does your module need any JavaScript?',
@@ -39,6 +42,8 @@ var DrupalModuleGenerator = yeoman.generators.Base.extend({
       this.moduleName = props.moduleName;
       var slugName = _s.slugify(this.moduleName);
 
+      this.moduleDescription = props.moduleDescription;
+
       this.addScripts = props.addScripts;
       this.scripts = this.addScripts ? 'scripts[] = scripts/' + slugName + '.js': '';
 
@@ -53,6 +58,7 @@ var DrupalModuleGenerator = yeoman.generators.Base.extend({
     this.copy('_bower.json', 'bower.json');
     this.copy('Gruntfile.js', 'Gruntfile.js');
     this.template('_module.info', _s.slugify(this.moduleName) + '.info');
+    this.template('_module.module', _s.slugify(this.moduleName) + '.module');
 
     if (this.addScripts) {
       this.copy('scripts/_script.js', 'scripts/' + _s.slugify(this.moduleName)  + '.js');
