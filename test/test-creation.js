@@ -107,4 +107,25 @@ describe('drupal-module generator', function () {
 
     helpers.verifyGeneratedFiles(this.app, files, fileContent, done);
   });
+  it('can describe itself', function(done) {
+    var files = {
+      expected: [
+        'package.json',
+        'test-module.info',
+        'test-module.module'
+      ]
+    };
+    var moduleDescription = 'This module is being tested for the presence of this string.';
+    var fileContent = [
+      ['package.json', new RegExp('"description": "'+ moduleDescription + '"')],
+      ['test-module.info', new RegExp('"description = "' + moduleDescription + '"')],
+      ['test-module.module', new RegExp(moduleDescription)]
+    ];
+
+    helpers.mockPrompt(this.app, {
+      'moduleDescription': moduleDescription
+    });
+
+    helpers.verifyGeneratedFiles(this.app, files, fileContent, done);
+  });
 });
