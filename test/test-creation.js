@@ -115,14 +115,15 @@ describe('drupal-module generator', function () {
         'test-module.module'
       ]
     };
-    var moduleDescription = 'This module is being tested for the presence of this string.';
+    var moduleDescription = 'This module is being tested for the presence of this string';
     var fileContent = [
       ['package.json', new RegExp('"description": "'+ moduleDescription + '"')],
-      ['test-module.info', new RegExp('"description = "' + moduleDescription + '"')],
+      ['test-module.info', new RegExp('description = ' + moduleDescription + '')],
       ['test-module.module', new RegExp(moduleDescription)]
     ];
 
     helpers.mockPrompt(this.app, {
+      'moduleName': 'Test Module',
       'moduleDescription': moduleDescription
     });
 
