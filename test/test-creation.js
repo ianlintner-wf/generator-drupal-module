@@ -48,7 +48,10 @@ describe('drupal-module generator', function () {
         'Gruntfile.js',
         'package.json',
         'test.info',
-        'scripts/test.js'
+        'scripts/test.js',
+        'config.rb',
+        'css/test.css',
+        'sass/test.sass'
       ]
     };
 
