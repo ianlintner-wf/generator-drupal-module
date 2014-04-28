@@ -6,13 +6,19 @@ var helpers = require('yeoman-generator').test;
 helpers.verifyGeneratedFiles = function(app, files, fileContent, done) {
   app.options['skip-install'] = true;
   app.run({}, function () {
-    helpers.assertFile(files.expected);
+
+    if (files.expected) {
+      helpers.assertFile(files.expected);
+    }
+
     if (files.unexpected) {
       helpers.assertNoFile(files.unexpected);
     }
+
     if (fileContent) {
       helpers.assertFileContent(fileContent);
     }
+
     done();
   });
 };
@@ -51,19 +57,13 @@ describe('drupal-module generator', function () {
   });
   it('generates without JS scripts', function (done) {
     var files = {
-      expected: [
-        'Gruntfile.js',
-        'package.json',
-        'test.info'
-      ],
       unexpected: [
-        'scripts/test.info'
+        'scripts/test.js'
       ]
     };
 
     helpers.mockPrompt(this.app, {
       'addScripts': false,
-      'addSass': true,
       'moduleName': 'test'
     });
 
