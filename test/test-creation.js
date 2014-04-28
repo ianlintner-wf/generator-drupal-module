@@ -109,8 +109,6 @@ describe('drupal-module generator', function () {
     ];
 
     helpers.mockPrompt(this.app, {
-      'addScripts': true,
-      'addSass': true,
       'moduleName': defaultSpecs.moduleName
     });
 
