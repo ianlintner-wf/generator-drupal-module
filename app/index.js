@@ -11,6 +11,7 @@ var DrupalModuleGenerator = yeoman.generators.Base.extend({
       if (!this.options['skip-install']) {
         this.installDependencies();
       }
+      this.log(chalk.magenta('Your module is ready for development. Use "grunt watch" and hack away!'));
     });
   },
 
