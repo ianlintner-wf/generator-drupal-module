@@ -3,6 +3,11 @@
 var path = require('path');
 var helpers = require('yeoman-generator').test;
 
+var defaultSpecs = {
+  'moduleName': 'Test Module!',
+  'slugName': 'test-module'
+};
+
 helpers.verifyGeneratedFiles = function(app, files, fileContent, done) {
   app.options['skip-install'] = true;
   app.run({}, function () {
@@ -72,37 +77,41 @@ describe('drupal-module generator', function () {
   it('transforms the module name into filenames correctly', function (done) {
     var files = {
       expected: [
-        'Gruntfile.js',
         'package.json',
-        'test-module.info',
-        'scripts/test-module.js'
+        defaultSpecs.slugName + '.info',
+        'scripts/' + defaultSpecs.slugName + '.js'
       ]
     };
 
-    helpers.mockPrompt(this.app, {
-      'addScripts': true,
-      'addSass': true,
-      'moduleName': 'Test Module!'
-    });
-
-    helpers.verifyGeneratedFiles(this.app, files, false, done);
-  });
-  it('replaces placeholders in meta-data files with appropriate content', function (done) {
-    var files = {
-      expected: [
-        'package.json',
-        'test-module.info'
-      ]
-    };
     var fileContent = [
-      ['package.json', /"name": "test-module"/],
-      ['test-module.info', /name = Test module/]
+      ['package.json', new RegExp('"name": "' + defaultSpecs.slugName + '"')],
+      ['test-module.info', new RegExp('name = ' + defaultSpecs.moduleName)]
     ];
 
     helpers.mockPrompt(this.app, {
       'addScripts': true,
       'addSass': true,
-      'moduleName': 'Test module'
+      'moduleName': defaultSpecs.moduleName
+    });
+
+    helpers.verifyGeneratedFiles(this.app, files, fileContent, done);
+  });
+  it('replaces placeholders in meta-data files with appropriate content', function (done) {
+    var files = {
+      expected: [
+        'package.json',
+        defaultSpecs.slugName + '.info'
+      ]
+    };
+    var fileContent = [
+      ['package.json', new RegExp('"name": "' + defaultSpecs.slugName + '"')],
+      ['test-module.info', new RegExp('name = ' + defaultSpecs.moduleName)]
+    ];
+
+    helpers.mockPrompt(this.app, {
+      'addScripts': true,
+      'addSass': true,
+      'moduleName': defaultSpecs.moduleName
     });
 
     helpers.verifyGeneratedFiles(this.app, files, fileContent, done);
@@ -111,19 +120,19 @@ describe('drupal-module generator', function () {
     var files = {
       expected: [
         'package.json',
-        'test-module.info',
-        'test-module.module'
+        defaultSpecs.slugName + '.info',
+        defaultSpecs.slugName + '.module'
       ]
     };
     var moduleDescription = 'This module is being tested for the presence of this string';
     var fileContent = [
       ['package.json', new RegExp('"description": "'+ moduleDescription + '"')],
-      ['test-module.info', new RegExp('description = ' + moduleDescription + '')],
-      ['test-module.module', new RegExp(moduleDescription)]
+      [defaultSpecs.slugName + '.info', new RegExp('description = ' + moduleDescription + '')],
+      [defaultSpecs.slugName + '.module', new RegExp(moduleDescription)]
     ];
 
     helpers.mockPrompt(this.app, {
-      'moduleName': 'Test Module',
+      'moduleName': defaultSpecs.moduleName,
       'moduleDescription': moduleDescription
     });
 
