@@ -88,7 +88,7 @@ describe('drupal-module generator', function () {
 
     var fileContent = [
       ['package.json', new RegExp('"name": "' + defaultSpecs.slugName + '"')],
-      ['test-module.info', new RegExp('name = ' + defaultSpecs.moduleName)]
+      [defaultSpecs.slugName + '.info', new RegExp('name = ' + defaultSpecs.moduleName)]
     ];
 
     helpers.mockPrompt(this.app, {
