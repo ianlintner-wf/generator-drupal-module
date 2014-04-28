@@ -58,6 +58,7 @@ describe('drupal-module generator', function () {
     helpers.mockPrompt(this.app, {
       'addScripts': true,
       'addSass': true,
+      'sassSyntax': '.sass',
       'moduleName': 'test'
     });
 
@@ -82,7 +83,8 @@ describe('drupal-module generator', function () {
       expected: [
         'package.json',
         defaultSpecs.slugName + '.info',
-        'scripts/' + defaultSpecs.slugName + '.js'
+        'scripts/' + defaultSpecs.slugName + '.js',
+        'sass/' + defaultSpecs.slugName + '.sass'
       ]
     };
 
@@ -94,6 +96,7 @@ describe('drupal-module generator', function () {
     helpers.mockPrompt(this.app, {
       'addScripts': true,
       'addSass': true,
+      'sassSyntax': '.sass',
       'moduleName': defaultSpecs.moduleName
     });
 
