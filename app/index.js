@@ -9,9 +9,12 @@ var DrupalModuleGenerator = yeoman.generators.Base.extend({
 
     this.on('end', function () {
       if (!this.options['skip-install']) {
-        this.installDependencies();
+        this.installDependencies({
+          callback: function() {
+            this.log(chalk.magenta('Your module is ready for development. Use "grunt watch" and hack away!'));
+          }.bind(this)
+        });
       }
-      this.log(chalk.magenta('Your module is ready for development. Use "grunt watch" and hack away!'));
     });
   },
 
@@ -19,7 +22,10 @@ var DrupalModuleGenerator = yeoman.generators.Base.extend({
     var done = this.async();
 
     this.log(this.yeoman);
-    this.log(chalk.magenta('Let\'s make a Drupal module!'));
+    this.log(chalk.magenta('Before we begin making your module, let\'s double check we\'re in the right place:'));
+    this.log(chalk.yellow(process.cwd()));
+
+    this.log(chalk.magenta('If you do NOT want this directory to contain your module files, press Ctrl/CMD + C now.'));
 
     var prompts = [{
       name: 'moduleName',
