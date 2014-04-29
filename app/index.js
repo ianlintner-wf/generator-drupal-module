@@ -9,9 +9,12 @@ var DrupalModuleGenerator = yeoman.generators.Base.extend({
 
     this.on('end', function () {
       if (!this.options['skip-install']) {
-        this.installDependencies();
+        this.installDependencies({
+          callback: function() {
+            this.log(chalk.magenta('Your module is ready for development. Use "grunt watch" and hack away!'));
+          }.bind(this)
+        });
       }
-      this.log(chalk.magenta('Your module is ready for development. Use "grunt watch" and hack away!'));
     });
   },
 
