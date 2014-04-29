@@ -6,7 +6,7 @@ sass_dir = "sass"
 images_dir = "images"
 javascripts_dir = "scripts"
 
-preferred_syntax = <%= css_syntax %>
+preferred_syntax = <%= sassSyntax %>
 disable_warnings = true
 
 environment = :development

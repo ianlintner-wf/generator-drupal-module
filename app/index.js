@@ -44,8 +44,8 @@ var DrupalModuleGenerator = yeoman.generators.Base.extend({
       type: 'list',
       name: 'sassSyntax',
       message: 'Which syntax would you prefer?',
-      choices: ['.sass', '.scss'],
-      default: '.sass'
+      choices: ['sass', 'scss'],
+      default: 'sass'
     }];
 
     this.prompt(prompts, function (props) {
@@ -60,7 +60,7 @@ var DrupalModuleGenerator = yeoman.generators.Base.extend({
       this.addSass = props.addSass;
       this.sassSyntax = props.sassSyntax;
 
-      this.stylesheets = this.addSass ? 'stylesheets[all][] = sass/' + slugName + this.sassSyntax : '';
+      this.stylesheets = this.addSass ? 'stylesheets[all][] = sass/' + slugName + '.' + this.sassSyntax : '';
       done();
     }.bind(this));
   },
@@ -81,16 +81,8 @@ var DrupalModuleGenerator = yeoman.generators.Base.extend({
     if (this.addSass) {
       this.copy('css/_module.css', 'css/' + slugName + '.css');
       this.copy('config.rb', 'config.rb');
-      switch (this.sassSyntax) {
-        case '.sass':
-          this.copy('sass/_module.sass', 'sass/' + slugName + '.sass');
-          break;
-        case '.scss':
-          this.copy('sass/_module.scss', 'sass/' + slugName + '.scss');
-          break;
-        default:
-          break;
-      }
+      this.copy('sass/_module.' + this.sassSyntax,
+                'sass/' + slugName + '.' + this.sassSyntax);
     }
   },
 

@@ -58,7 +58,7 @@ describe('drupal-module generator', function () {
     helpers.mockPrompt(this.app, {
       'addScripts': true,
       'addSass': true,
-      'sassSyntax': '.sass',
+      'sassSyntax': 'sass',
       'moduleName': 'test'
     });
 
@@ -96,7 +96,7 @@ describe('drupal-module generator', function () {
     helpers.mockPrompt(this.app, {
       'addScripts': true,
       'addSass': true,
-      'sassSyntax': '.sass',
+      'sassSyntax': 'sass',
       'moduleName': defaultSpecs.moduleName
     });
 
@@ -138,6 +138,30 @@ describe('drupal-module generator', function () {
     helpers.mockPrompt(this.app, {
       'moduleName': defaultSpecs.moduleName,
       'moduleDescription': moduleDescription
+    });
+
+    helpers.verifyGeneratedFiles(this.app, files, fileContent, done);
+  });
+  it('facilitates sass syntax', function(done) {
+    var files = {
+      expected: [
+        'sass/' + defaultSpecs.slugName + '.sass',
+        'css/' + defaultSpecs.slugName + '.css',
+        'config.rb'
+      ],
+      unexpected: [
+        'sass/' + defaultSpecs.slugName + '.scss'
+      ]
+    };
+
+    var fileContent = [
+      ['config.rb', new RegExp('preferred_syntax = sass')]
+    ];
+
+    helpers.mockPrompt(this.app, {
+      'moduleName': defaultSpecs.slugName,
+      'addSass': true,
+      'sassSyntax': 'sass'
     });
 
     helpers.verifyGeneratedFiles(this.app, files, fileContent, done);
