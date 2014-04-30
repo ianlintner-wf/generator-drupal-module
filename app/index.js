@@ -43,6 +43,15 @@ var DrupalModuleGenerator = yeoman.generators.Base.extend({
       name: 'addSass',
       message: 'Does your module need to use Sass?',
       default: true
+    }, {
+      when: function(response) {
+        return response.addSass;
+      },
+      type: 'list',
+      name: 'sassSyntax',
+      message: 'Which syntax would you prefer?',
+      choices: ['sass', 'scss'],
+      default: 'sass'
     }];
 
     this.prompt(prompts, function (props) {
@@ -55,20 +64,31 @@ var DrupalModuleGenerator = yeoman.generators.Base.extend({
       this.scripts = this.addScripts ? 'scripts[] = scripts/' + slugName + '.js': '';
 
       this.addSass = props.addSass;
-      this.stylesheets = this.addSass ? 'stylesheets[all][] = sass/' + slugName + '.sass' : '';
+      this.sassSyntax = props.sassSyntax;
+
+      this.stylesheets = this.addSass ? 'stylesheets[all][] = sass/' + slugName + '.' + this.sassSyntax : '';
       done();
     }.bind(this));
   },
 
   app: function () {
+    var slugName = _s.slugify(this.moduleName);
+
     this.template('_package.json', 'package.json');
     this.copy('_bower.json', 'bower.json');
     this.copy('Gruntfile.js', 'Gruntfile.js');
-    this.template('_module.info', _s.slugify(this.moduleName) + '.info');
-    this.template('_module.module', _s.slugify(this.moduleName) + '.module');
+    this.template('_module.info', slugName + '.info');
+    this.template('_module.module', slugName + '.module');
 
     if (this.addScripts) {
-      this.copy('scripts/_script.js', 'scripts/' + _s.slugify(this.moduleName)  + '.js');
+      this.copy('scripts/_script.js', 'scripts/' + slugName  + '.js');
+    }
+
+    if (this.addSass) {
+      this.copy('css/_module.css', 'css/' + slugName + '.css');
+      this.copy('config.rb', 'config.rb');
+      this.copy('sass/_module.' + this.sassSyntax,
+                'sass/' + slugName + '.' + this.sassSyntax);
     }
   },
 
