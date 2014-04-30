@@ -9,9 +9,12 @@ var DrupalModuleGenerator = yeoman.generators.Base.extend({
 
     this.on('end', function () {
       if (!this.options['skip-install']) {
-        this.installDependencies();
+        this.installDependencies({
+          callback: function() {
+            this.log(chalk.magenta('Your module is ready for development. Use "grunt watch" and hack away!'));
+          }.bind(this)
+        });
       }
-      this.log(chalk.magenta('Your module is ready for development. Use "grunt watch" and hack away!'));
     });
   },
 
@@ -19,7 +22,10 @@ var DrupalModuleGenerator = yeoman.generators.Base.extend({
     var done = this.async();
 
     this.log(this.yeoman);
-    this.log(chalk.magenta('Let\'s make a Drupal module!'));
+    this.log(chalk.magenta('Before we begin making your module, let\'s double check we\'re in the right place:'));
+    this.log(chalk.yellow(process.cwd()));
+
+    this.log(chalk.magenta('If you do NOT want this directory to contain your module files, press Ctrl/CMD + C now.'));
 
     var prompts = [{
       name: 'moduleName',
@@ -37,6 +43,15 @@ var DrupalModuleGenerator = yeoman.generators.Base.extend({
       name: 'addSass',
       message: 'Does your module need to use Sass?',
       default: true
+    }, {
+      when: function(response) {
+        return response.addSass;
+      },
+      type: 'list',
+      name: 'sassSyntax',
+      message: 'Which syntax would you prefer?',
+      choices: ['sass', 'scss'],
+      default: 'sass'
     }];
 
     this.prompt(prompts, function (props) {
@@ -49,20 +64,31 @@ var DrupalModuleGenerator = yeoman.generators.Base.extend({
       this.scripts = this.addScripts ? 'scripts[] = scripts/' + slugName + '.js': '';
 
       this.addSass = props.addSass;
-      this.stylesheets = this.addSass ? 'stylesheets[all][] = sass/' + slugName + '.sass' : '';
+      this.sassSyntax = props.sassSyntax;
+
+      this.stylesheets = this.addSass ? 'stylesheets[all][] = sass/' + slugName + '.' + this.sassSyntax : '';
       done();
     }.bind(this));
   },
 
   app: function () {
+    var slugName = _s.slugify(this.moduleName);
+
     this.template('_package.json', 'package.json');
     this.copy('_bower.json', 'bower.json');
     this.copy('Gruntfile.js', 'Gruntfile.js');
-    this.template('_module.info', _s.slugify(this.moduleName) + '.info');
-    this.template('_module.module', _s.slugify(this.moduleName) + '.module');
+    this.template('_module.info', slugName + '.info');
+    this.template('_module.module', slugName + '.module');
 
     if (this.addScripts) {
-      this.copy('scripts/_script.js', 'scripts/' + _s.slugify(this.moduleName)  + '.js');
+      this.copy('scripts/_script.js', 'scripts/' + slugName  + '.js');
+    }
+
+    if (this.addSass) {
+      this.copy('css/_module.css', 'css/' + slugName + '.css');
+      this.copy('config.rb', 'config.rb');
+      this.copy('sass/_module.' + this.sassSyntax,
+                'sass/' + slugName + '.' + this.sassSyntax);
     }
   },
 
