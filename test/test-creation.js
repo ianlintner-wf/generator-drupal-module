@@ -166,4 +166,28 @@ describe('drupal-module generator', function () {
 
     helpers.verifyGeneratedFiles(this.app, files, fileContent, done);
   });
+  it('facilitates scss syntax', function(done) {
+    var files = {
+      expected: [
+        'sass/' + defaultSpecs.slugName + '.scss',
+        'css/' + defaultSpecs.slugName + '.css',
+        'config.rb'
+      ],
+      unexpected: [
+        'sass/' + defaultSpecs.slugName + '.sass'
+      ]
+    };
+
+    var fileContent = [
+      ['config.rb', new RegExp('preferred_syntax = scss')]
+    ];
+
+    helpers.mockPrompt(this.app, {
+      'moduleName': defaultSpecs.slugName,
+      'addSass': true,
+      'sassSyntax': 'scss'
+    });
+
+    helpers.verifyGeneratedFiles(this.app, files, fileContent, done);
+  });
 });
