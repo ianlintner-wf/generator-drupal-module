@@ -4,5 +4,6 @@ description = <%= moduleDescription %>
 
 <%= stylesheets %>
 <% if (addSettings) { %>
+configure = admin/config/settings/<%= slugName %>
 files[] = <%= slugName %>.admin.inc
 <% } %>
