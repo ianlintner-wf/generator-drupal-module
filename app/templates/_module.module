@@ -4,3 +4,21 @@
  * @file
  * <%= moduleDescription %>
  */
+<% if (moduleSettingsScreen) { %>
+function <%= moduleName %>_menu() {
+
+  $items = array();
+
+  $items['admin/settings/<%= moduleName %>'] = array(
+    'title' => '<%= moduleName %> settings page',
+    'description' => 'Description of your On this date settings page',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('<%= moduleName %>_admin'),
+    'access arguments' => array('administer onthisdate settings'),
+    'file' => '<%= moduleName %>.admin.inc',
+    'type' => MENU_NORMAL_ITEM,
+   );
+
+  return $items;
+}
+<% } %>
