@@ -4,18 +4,28 @@
  * @file
  * <%= moduleDescription %>
  */
-<% if (moduleSettingsScreen) { %>
-function <%= moduleName %>_menu() {
+<% if (addSettings) { %>
+
+function <%= slugName %>_permission() {
+  return array(
+    'administer <%= slugName %> module' => array(
+      'title' => t('Administer <%= slugName %> module'),
+      'description' => t('Perform administration tasks for <%= slugName %> module.'),
+    ),
+  );
+}
+
+function <%= slugName %>_menu() {
 
   $items = array();
 
-  $items['admin/settings/<%= moduleName %>'] = array(
-    'title' => '<%= moduleName %> settings page',
+  $items['admin/settings/<%= slugName %>'] = array(
+    'title' => '<%= slugName %> settings page',
     'description' => 'Description of your On this date settings page',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('<%= moduleName %>_admin'),
-    'access arguments' => array('administer onthisdate settings'),
-    'file' => '<%= moduleName %>.admin.inc',
+    'page arguments' => array('<%= slugName %>_admin'),
+    'access arguments' => array('administer <%= slugName %> module'),
+    'file' => '<%= slugName %>.admin.inc',
     'type' => MENU_NORMAL_ITEM,
    );
 

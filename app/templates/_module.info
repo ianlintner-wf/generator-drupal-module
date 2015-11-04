@@ -3,3 +3,6 @@ description = <%= moduleDescription %>
 <%= scripts %>
 
 <%= stylesheets %>
+<% if (addSettings) { %>
+files[] = <%= slugName %>.admin.inc
+<% } %>
