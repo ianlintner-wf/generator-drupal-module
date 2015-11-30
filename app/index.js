@@ -52,6 +52,11 @@ var DrupalModuleGenerator = yeoman.generators.Base.extend({
       message: 'Which syntax would you prefer?',
       choices: ['sass', 'scss'],
       default: 'sass'
+    },{
+      type: 'confirm',
+      name: 'addSettings',
+      message: 'Does your module need an admin settings form?',
+      default: false
     }];
 
     this.prompt(prompts, function (props) {
@@ -61,12 +66,14 @@ var DrupalModuleGenerator = yeoman.generators.Base.extend({
       this.moduleDescription = props.moduleDescription;
 
       this.addScripts = props.addScripts;
+      
       this.scripts = this.addScripts ? 'scripts[] = scripts/' + slugName + '.js': '';
 
       this.addSass = props.addSass;
       this.sassSyntax = props.sassSyntax;
 
       this.stylesheets = this.addSass ? 'stylesheets[all][] = sass/' + slugName + '.' + this.sassSyntax : '';
+      this.addSettings = props.addSettings;
       done();
     }.bind(this));
   },
