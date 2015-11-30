@@ -90,6 +90,10 @@ var DrupalModuleGenerator = yeoman.generators.Base.extend({
       this.copy('sass/_module.' + this.sassSyntax,
                 'sass/' + slugName + '.' + this.sassSyntax);
     }
+
+    if(this.addSettings) {
+      this.copy('_module.admin.inc', slugName + '.admin.inc');
+    }
   },
 
   projectfiles: function () {

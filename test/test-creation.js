@@ -190,4 +190,18 @@ describe('drupal-module generator', function () {
 
     helpers.verifyGeneratedFiles(this.app, files, fileContent, done);
   });
+  it('generates settings file', function (done) {
+    var files = {
+      expected: [
+        'test.admin.inc'
+      ]
+    };
+
+    helpers.mockPrompt(this.app, {
+      'addSettings': true,
+      'moduleName': 'test'
+    });
+
+    helpers.verifyGeneratedFiles(this.app, files, false, done);
+  });
 });
