@@ -1,5 +1,23 @@
 # generator-drupal-module [![Build Status](https://secure.travis-ci.org/DavidHughes/generator-drupal-module.png?branch=master)](https://travis-ci.org/DavidHughes/generator-drupal-module)
 
+
+This is a fork of:  DavidHughes/generator-drupal-module
+I am currently adding some enhancements.
+
+Short Term Roadmap
+- Admin Settings Page
+- Permissions
+
+Long Term Roadmap
+- Block
+- More Complex Menus
+ - Basic Callback
+ - Ajax Callbacks
+ - Set of Tab Pages
+ - Form Callback
+
+
+
 > [Yeoman](http://yeoman.io) generator
 
 
