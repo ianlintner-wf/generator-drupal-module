@@ -1,5 +1,4 @@
-# generator-drupal-module [![Build Status](https://secure.travis-ci.org/DavidHughes/generator-drupal-module.png?branch=master)](https://travis-ci.org/DavidHughes/generator-drupal-module)
-
+# generator-drupal-module [![Build Status](https://travis-ci.org/ianlintner-wf/generator-drupal-module.svg)](https://travis-ci.org/ianlintner-wf/generator-drupal-module)
 
 This is a fork of:  [DavidHughes/generator-drupal-module](https://github.com/DavidHughes/generator-drupal-module)
 I am currently adding some enhancements.
